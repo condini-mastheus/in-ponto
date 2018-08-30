@@ -13,7 +13,7 @@ import Admin from './views/admin/Dashboard'
 const App = () => (
   <Provider store={store}>
     <Router>
-      <Grid container style={{ flexGrow: 1 }}>
+      <Grid className="full-h" container>
         <Route exact path="/" component={Form} />
         <Route exact path="/admin" component={Admin} />
       </Grid>
