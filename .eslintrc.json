@@ -3,6 +3,7 @@
   "rules": {
     "react/jsx-filename-extension": "off",
     "semi": ["error", "never"],
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "react/jsx-one-expression-per-line": "off"
   }
 }
