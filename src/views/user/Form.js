@@ -6,6 +6,7 @@ import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Recaptcha from 'react-recaptcha'
+import Reaptcha from 'reaptcha'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
@@ -29,29 +30,42 @@ const styles = theme => ({
   }
 })
 
-let recaptchaInstance = null
-
 export class Form extends Component {
   constructor(props) {
     super(props)
 
+    this.recaptchaInstance = null
+
     this.state = {
       userCode: '',
       captcha: '',
-      captchaResponse: '',
+      isCaptchaVerified: false,
     }
   }
 
   handleChange = name => event => {
     if(name === 'captcha') {
-      recaptchaInstance.execute()
+      this.recaptchaInstance.execute()
     }
 
     this.setState({
       [name]: event.target.value,
     })
   }
-  
+
+  onFormSubmit = event => {
+    event.preventDefault()
+    const { userCode, captcha, isCaptchaVerified } = this.state
+
+    // if (!userCode || (captcha === 'human' && isCaptchaVerified)) {
+    //   alert('ERROR')
+    //   return
+    // }
+
+    console.log(this.state)
+    console.log('FOI');
+  }
+
   render() {
     const { classes } = this.props
     return (
@@ -63,47 +77,49 @@ export class Form extends Component {
           </Grid>
 
           <Divider />
-          
+
           {/* Form */}
-          <Grid container spacing={24} alignItems={'flex-end'} justify={'center'}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="userCode"
-                label="Digite seu código"
-                className={classes.textField}
-                value={this.state.userCode}
-                onChange={this.handleChange('userCode')}
-                fullWidth
-                margin="normal"
-              />
+          <form onSubmit={(event) => this.onFormSubmit(event)}>
+            <Grid container spacing={24} alignItems={'flex-end'} justify={'center'}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="userCode"
+                  label="Digite seu código"
+                  className={classes.textField}
+                  value={this.state.userCode}
+                  onChange={this.handleChange('userCode')}
+                  fullWidth
+                  margin="normal"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <RadioGroup
+                  aria-label="captcha"
+                  name="captcha"
+                  className={classes.group}
+                  value={this.state.captcha}
+                  onChange={this.handleChange('captcha')}
+                >
+                  <FormControlLabel value="human" control={<Radio />} label="Não sou um robô!" />
+                </RadioGroup>
+                <Reaptcha
+                  ref={e => (this.recaptchaInstance = e)}
+                  sitekey="6LcDdG0UAAAAAC20F_JJNeBKOnFpJXcYatlojxO4"
+                  onVerify={() => {
+                    this.setState({ isCaptchaVerified: true })
+                  }}
+                  size="invisible"
+                  />
+              </Grid>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <RadioGroup
-                aria-label="captcha"
-                name="captcha"
-                className={classes.group}
-                value={this.state.captcha}
-                onChange={this.handleChange('captcha')}
-              >
-                <FormControlLabel value="human" control={<Radio />} label="Não sou um robô!" />
-              </RadioGroup>
-
-              <Recaptcha 
-                sitekey="6LcDdG0UAAAAAC20F_JJNeBKOnFpJXcYatlojxO4" 
-                render="explicit" 
-                hl={"pt-br"}
-                ref={e => recaptchaInstance = e}
-                size={'invisible'}
-                verifyCallback={(response) => this.setState({ captchaResponse: response}) }  />
+            <Grid container direction="row" justify="flex-end">
+                <Button type="submit" variant="contained" color="primary" className={classes.button} disabled={!this.state.isCaptchaVerified}>
+                  Enviar
+                </Button>
             </Grid>
-          </Grid>
-          
-          <Grid container direction="row" justify="flex-end">
-              <Button variant="contained" color="primary" className={classes.button}>
-                Enviar
-              </Button>
-          </Grid>
+          </form>
 
         </Paper>
       </Grid>
