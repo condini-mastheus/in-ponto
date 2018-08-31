@@ -68,6 +68,8 @@ export class Form extends Component {
 
   render() {
     const { classes } = this.props
+    const { userCode, captcha, isCaptchaVerified } = this.state
+    
     return (
       <Grid className={classes.root} container direction="row" justify="center" alignItems="center">
         <Paper className={classes.paper}>
@@ -86,7 +88,7 @@ export class Form extends Component {
                   id="userCode"
                   label="Digite seu código"
                   className={classes.textField}
-                  value={this.state.userCode}
+                  value={userCode}
                   onChange={this.handleChange('userCode')}
                   fullWidth
                   margin="normal"
@@ -98,7 +100,7 @@ export class Form extends Component {
                   aria-label="captcha"
                   name="captcha"
                   className={classes.group}
-                  value={this.state.captcha}
+                  value={captcha}
                   onChange={this.handleChange('captcha')}
                 >
                   <FormControlLabel value="human" control={<Radio />} label="Não sou um robô!" />
@@ -115,7 +117,12 @@ export class Form extends Component {
             </Grid>
 
             <Grid container direction="row" justify="flex-end">
-                <Button type="submit" variant="contained" color="primary" className={classes.button} disabled={!this.state.isCaptchaVerified}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  disabled={!isCaptchaVerified}>
                   Enviar
                 </Button>
             </Grid>
