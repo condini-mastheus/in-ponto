@@ -53,7 +53,7 @@ export class Form extends Component {
     })
   }
 
-  onFormSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault()
     const { userCode, captcha, isCaptchaVerified } = this.state
 
@@ -79,7 +79,7 @@ export class Form extends Component {
           <Divider />
 
           {/* Form */}
-          <form onSubmit={(event) => this.onFormSubmit(event)}>
+          <form onSubmit={(event) => this.handleSubmit(event)}>
             <Grid container spacing={24} alignItems={'flex-end'} justify={'center'}>
               <Grid item xs={12} sm={6}>
                 <TextField
