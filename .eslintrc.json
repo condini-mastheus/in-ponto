@@ -1,9 +1,24 @@
 {
   "extends": "airbnb",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "globals": {
+    "jest": false,
+    "it": false,
+    "describe": false,
+    "expect": false
+  },
   "rules": {
     "react/jsx-filename-extension": "off",
     "semi": ["error", "never"],
     "linebreak-style": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "no-return-assign": "off",
+    "react/forbid-prop-types": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }
