@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 import PropTypes from 'prop-types'
+
+// Ui
 import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -12,6 +15,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
+
+// Services
+import validation from '../../services/validation'
 
 // custom components
 import Brand from '../../components/Brand'
@@ -43,6 +49,7 @@ export class Form extends Component {
       userCode: '',
       captcha: '',
       isCaptchaVerified: false,
+      error: {},
     }
   }
 
@@ -68,21 +75,32 @@ export class Form extends Component {
 
   handleSubmit = () => (event) => {
     event.preventDefault()
-    // const { userCode, captcha, isCaptchaVerified } = this.state
+    const { userCode, captcha, isCaptchaVerified } = this.state
 
-    // if (!userCode || (captcha === 'human' && isCaptchaVerified)) {
-    //   alert('ERROR')
-    //   return
-    // }
+    const error = {}
+    error.userCode = !!validation({ userCode })
+    error.captcha = !!validation({ captcha })
 
-    // Object.values(this.state).filter(v => v).length !== 1
-    console.log(this.state)
-    console.log('FOI')
+    if (error.userCode || (error.captcha && isCaptchaVerified)) {
+      this.setState({ error })
+      return
+    }
+
+    this.setState({ error })
+
+    const clockIn = {
+      userCode,
+      date: moment().format('YYYY-DD-MM HH:mm:ss'),
+    }
+
+    console.log(clockIn)
   }
 
   render() {
     const { classes } = this.props
-    const { userCode, captcha, isCaptchaVerified } = this.state
+    const {
+      userCode, captcha, isCaptchaVerified, error,
+    } = this.state
 
     return (
       <Grid className={classes.root} container direction="row" justify="center" alignItems="center">
@@ -103,7 +121,7 @@ export class Form extends Component {
                   label="Digite seu código"
                   className={classes.textField}
                   value={userCode}
-                  error={false}
+                  error={error.userCode}
                   onChange={this.handleChange('userCode')}
                   fullWidth
                   margin="normal"
@@ -111,7 +129,7 @@ export class Form extends Component {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <FormControl required error={false} component="fieldset">
+                <FormControl required error={error.captcha} component="fieldset">
                   <FormHelperText>Você é um robô?</FormHelperText>
                   <RadioGroup
                     aria-label="captcha"
