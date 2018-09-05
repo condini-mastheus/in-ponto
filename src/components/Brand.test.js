@@ -11,6 +11,12 @@ describe('<Brand />', () => {
     expect(element.hasClass('brand')).toBe(true)
   })
 
+  it('should render with classname .brand and .shorted', () => {
+    const wrapper = render(<Brand short />)
+    const element = wrapper
+    expect(element.hasClass('shorted')).toBe(true)
+  })
+
   it('should render with h1', () => {
     const wrapper = render(<Brand />)
     const element = wrapper.find('h1')

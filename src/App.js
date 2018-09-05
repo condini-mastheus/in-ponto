@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import store from './store'
 
 import Form from './views/user/Form'
-import Admin from './views/admin/Dashboard'
+import Admin from './views/admin'
 
 const App = () => (
   <Provider store={store}>

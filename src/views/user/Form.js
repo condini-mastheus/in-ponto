@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import moment from 'moment'
 import PropTypes from 'prop-types'
 
 // Ui
@@ -18,6 +17,7 @@ import RadioGroup from '@material-ui/core/RadioGroup'
 
 // Services
 import validation from '../../services/validation'
+import dateFormat from '../../services/dateFormat'
 
 // custom components
 import Brand from '../../components/Brand'
@@ -90,7 +90,7 @@ export class Form extends Component {
 
     const clockIn = {
       userCode,
-      date: moment().format('YYYY-DD-MM HH:mm:ss'),
+      date: dateFormat({ date: 'now', format: 'YYYY-DD-MM HH:mm:ss' }),
     }
 
     console.log(clockIn)

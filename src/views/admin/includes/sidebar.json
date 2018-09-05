@@ -1,0 +1,24 @@
+{
+  "main": [
+    {
+      "key": 1,
+      "icon": "inbox",
+      "name": "Dashboard"
+    },
+    {
+      "key": 2,
+      "icon": "drafts",
+      "name": "Rascunhos"
+    }
+  ],
+  "config": [
+    {
+      "key": 1,
+      "name": "Dashboard"
+    },
+    {
+      "key": 2,
+      "name": "Rascunhos"
+    }
+  ]
+}
