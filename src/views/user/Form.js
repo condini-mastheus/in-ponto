@@ -148,7 +148,7 @@ export class Form extends Component {
                   </RadioGroup>
                   <Reaptcha
                     ref={e => (this.recaptchaInstance = e)}
-                    sitekey="6LcDdG0UAAAAAC20F_JJNeBKOnFpJXcYatlojxO4"
+                    sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
                     onVerify={response => this.handleVerify(response)}
                     size="invisible"
                   />
