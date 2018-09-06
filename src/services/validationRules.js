@@ -10,11 +10,17 @@ const validationRules = {
       minimum: 4,
     },
   },
+  userHuman: {
+    presence: {
+      allowEmpty: false,
+    },
+  },
   captcha: {
     presence: {
       allowEmpty: false,
     },
   },
+
 }
 
 export default validationRules

@@ -9,7 +9,9 @@ import { withStyles } from '@material-ui/core/styles'
 import Header from './includes/Header'
 import Sidebar from './includes/Sidebar'
 import Footer from './includes/Footer'
+
 import Dashboard from './Dashboard'
+import Employee from './Employee'
 
 const styles = theme => ({
   root: {
@@ -37,12 +39,12 @@ export const Admin = (props) => {
   return (
     <div className={classes.root}>
       <Header />
-      <Sidebar />
+      <Sidebar match={match} />
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {/* <Typography noWrap>You think water moves fast? You should see ice.</Typography> */}
         <Route path={`${match.path}/`} exact component={Dashboard} />
-        {/* <Route path={`${match.path}/users`} component={User} /> */}
+        <Route path={`${match.path}/employees`} exact component={Employee} />
       </main>
       <Footer />
     </div>

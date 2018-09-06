@@ -13,7 +13,7 @@ const App = () => (
     <Router>
       <CssBaseline>
         <Route exact path="/" component={Form} />
-        <Route exact path="/admin" component={Admin} />
+        <Route path="/admin" component={Admin} />
       </CssBaseline>
     </Router>
   </Provider>

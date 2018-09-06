@@ -47,6 +47,7 @@ export class Form extends Component {
 
     this.state = {
       userCode: '',
+      userHuman: '',
       captcha: '',
       isCaptchaVerified: false,
       error: {},
@@ -67,7 +68,8 @@ export class Form extends Component {
     if (!response) return
 
     this.setState({
-      captcha: 'human',
+      userHuman: 'human',
+      captcha: response,
       isCaptchaVerified: true,
     })
   }
@@ -75,13 +77,15 @@ export class Form extends Component {
 
   handleSubmit = () => (event) => {
     event.preventDefault()
-    const { userCode, captcha, isCaptchaVerified } = this.state
+    const {
+      userCode, captcha, isCaptchaVerified, userHuman,
+    } = this.state
 
     const error = {}
     error.userCode = !!validation({ userCode })
-    error.captcha = !!validation({ captcha })
+    error.userHuman = !!validation({ captcha }) && !!validation({ userHuman })
 
-    if (error.userCode || (error.captcha && isCaptchaVerified)) {
+    if (error.userCode || (error.userHuman && isCaptchaVerified)) {
       this.setState({ error })
       return
     }
@@ -90,6 +94,7 @@ export class Form extends Component {
 
     const clockIn = {
       userCode,
+      captcha,
       date: dateFormat({ date: 'now', format: 'YYYY-DD-MM HH:mm:ss' }),
     }
 
@@ -99,7 +104,7 @@ export class Form extends Component {
   render() {
     const { classes } = this.props
     const {
-      userCode, captcha, isCaptchaVerified, error,
+      userCode, isCaptchaVerified, error, userHuman,
     } = this.state
 
     return (
@@ -129,13 +134,13 @@ export class Form extends Component {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <FormControl required error={error.captcha} component="fieldset">
+                <FormControl required error={error.userHuman} component="fieldset">
                   <FormHelperText>Você é um robô?</FormHelperText>
                   <RadioGroup
                     aria-label="captcha"
                     name="captcha"
                     className={classes.group}
-                    value={captcha}
+                    value={userHuman}
                     id="captcha"
                     onChange={this.handleCaptcha()}
                   >

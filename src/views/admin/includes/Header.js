@@ -11,9 +11,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import Icon from '@material-ui/core/Icon'
 
-// custom
-import Brand from '../../../components/Brand'
-
 const styles = theme => ({
   flex: {
     flexGrow: 1,
@@ -31,19 +28,19 @@ class MenuAppBar extends React.Component {
   state = {
     auth: true,
     anchorEl: null,
-  };
+  }
 
   handleChange = (event) => {
     this.setState({ auth: event.target.checked })
-  };
+  }
 
   handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget })
-  };
+  }
 
   handleClose = () => {
     this.setState({ anchorEl: null })
-  };
+  }
 
   render() {
     const { classes } = this.props

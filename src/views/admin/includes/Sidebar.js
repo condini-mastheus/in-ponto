@@ -11,6 +11,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 import Icon from '@material-ui/core/Icon'
 
+import { Link } from 'react-router-dom'
+
 // custom
 import sidebar from './sidebar.json'
 
@@ -23,7 +25,7 @@ const styles = theme => ({
 })
 
 export const Sidebar = (props) => {
-  const { classes } = props
+  const { match, classes } = props
 
   return (
     <Drawer
@@ -35,7 +37,7 @@ export const Sidebar = (props) => {
       <div className={classes.toolbar} />
       <List component="nav">
         { sidebar.main.map(item => (
-          <ListItem button key={item.key}>
+          <ListItem button key={item.key} component={Link} to={`${match.path}${item.to}`}>
             <ListItemIcon>
               <Icon>{item.icon}</Icon>
             </ListItemIcon>
@@ -59,6 +61,7 @@ export const Sidebar = (props) => {
 
 Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(Sidebar)
