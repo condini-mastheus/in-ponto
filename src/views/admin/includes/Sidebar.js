@@ -35,7 +35,7 @@ export const Sidebar = (props) => {
       }}
     >
       <div className={classes.toolbar} />
-      <List component="nav">
+      <List component="nav" id="main">
         { sidebar.main.map(item => (
           <ListItem button key={item.key} component={Link} to={`${match.path}${item.to}`}>
             <ListItemIcon>
@@ -48,7 +48,7 @@ export const Sidebar = (props) => {
 
       <Divider />
 
-      <List component="nav">
+      <List component="nav" id="config">
         { sidebar.config.map(item => (
           <ListItem button key={item.key}>
             <ListItemText primary={item.name} />

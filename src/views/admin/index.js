@@ -11,7 +11,7 @@ import Sidebar from './includes/Sidebar'
 import Footer from './includes/Footer'
 
 import Dashboard from './Dashboard'
-import Employee from './Employee'
+import Employees from './Employees'
 
 const styles = theme => ({
   root: {
@@ -44,7 +44,7 @@ export const Admin = (props) => {
         <div className={classes.toolbar} />
         {/* <Typography noWrap>You think water moves fast? You should see ice.</Typography> */}
         <Route path={`${match.path}/`} exact component={Dashboard} />
-        <Route path={`${match.path}/employees`} exact component={Employee} />
+        <Route path={`${match.path}/employees`} exact component={Employees} />
       </main>
       <Footer />
     </div>

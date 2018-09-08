@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export class Employee extends Component {
+export class Employees extends Component {
   state = {
   }
 
@@ -16,7 +16,7 @@ export class Employee extends Component {
   }
 }
 
-Employee.propTypes = {
+Employees.propTypes = {
 }
 
-export default Employee
+export default Employees

@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-const Dashboard = () => (
-  <div>
-    <h1>Dashboard</h1>
-  </div>
-)
+export default class Dashboard extends Component {
+  state = {
 
-export default Dashboard
+  }
+
+  componentDidMount() {
+    document.title = 'Dashboard | In Ponto'
+  }
+
+  render() {
+    return (
+      <div />
+    )
+  }
+}
