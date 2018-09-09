@@ -6,13 +6,13 @@ export default class Dashboard extends Component {
 
   }
 
-  componentDidMount() {
-    document.title = 'Dashboard | In Ponto'
-  }
+  // componentDidMount() {
+  //   document.title = 'Dashboard | In Ponto'
+  // }
 
   render() {
     return (
-      <div />
+      <p>Painel de Controle</p>
     )
   }
 }

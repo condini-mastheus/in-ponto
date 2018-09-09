@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
 // Ui
 import { withStyles } from '@material-ui/core/styles'
@@ -24,10 +25,14 @@ const styles = theme => ({
   },
 })
 
-class MenuAppBar extends React.Component {
+export class Header extends Component {
   state = {
     auth: true,
     anchorEl: null,
+  }
+
+  componentDidMount() {
+    document.title = 'Painel de Controle | In ponto'
   }
 
   handleChange = (event) => {
@@ -94,8 +99,8 @@ class MenuAppBar extends React.Component {
   }
 }
 
-MenuAppBar.propTypes = {
+Header.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(MenuAppBar)
+export default withStyles(styles)(withRouter(Header))

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 // Ui
 import { withStyles } from '@material-ui/core/styles'
@@ -11,7 +12,11 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 import Icon from '@material-ui/core/Icon'
 
+// Routing
 import { Link } from 'react-router-dom'
+
+// State management
+import ActionsCreators from '../../../store/actionCreators'
 
 // custom
 import sidebar from './sidebar.json'
@@ -24,8 +29,12 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
 })
 
+// const handleClick = url => () => {
+//   props.loadPageInfo(url)
+// }
+
 export const Sidebar = (props) => {
-  const { match, classes } = props
+  const { classes } = props
 
   return (
     <Drawer
@@ -36,14 +45,27 @@ export const Sidebar = (props) => {
     >
       <div className={classes.toolbar} />
       <List component="nav" id="main">
-        { sidebar.main.map(item => (
-          <ListItem button key={item.key} component={Link} to={`${match.path}${item.to}`}>
-            <ListItemIcon>
-              <Icon>{item.icon}</Icon>
-            </ListItemIcon>
-            <ListItemText primary={item.name} />
-          </ListItem>
-        ))}
+        {
+          Object.keys(sidebar.main).map((key) => {
+            const item = sidebar.main[key]
+            return (
+              <ListItem
+                button
+                key={item.key}
+                // component={Link}
+                // to={`${item.to}`}
+                onClick={() => props.loadPageInfo(key)}
+                // onClick={handleClick(key)}
+              >
+                <ListItemIcon>
+                  <Icon>{item.icon}</Icon>
+                </ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItem>
+            )
+          })
+        }
+        {/* { sidebar.main } */}
       </List>
 
       <Divider />
@@ -61,7 +83,12 @@ export const Sidebar = (props) => {
 
 Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Sidebar)
+const mapStateToProps = state => ({})
+
+const mapDispatchToProps = dispatch => ({
+  loadPageInfo: url => dispatch(ActionsCreators.pageInfoRequest(url)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Sidebar))

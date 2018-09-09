@@ -1,32 +1,24 @@
 {
-  "main": [
-    {
+  "main": {
+    "/admin" : {
       "key": 1,
       "icon": "inbox",
       "name": "Dashboard",
-      "to": "/"
+      "to": "/admin"
     },
-    {
+    "/admin/drafts": {
       "key": 2,
       "icon": "drafts",
       "name": "Rascunhos",
-      "to": "/"
+      "to": "/admin/drafts"
     },
-    {
+    "/admin/employees": {
       "key": 3,
       "icon": "people",
       "name": "Funcionários",
-      "to": "/employees"
+      "to": "/admin/employees"
     }
-  ],
+  },
   "config": [
-    {
-      "key": 1,
-      "name": "Dashboard"
-    },
-    {
-      "key": 2,
-      "name": "Rascunhos"
-    }
   ]
 }

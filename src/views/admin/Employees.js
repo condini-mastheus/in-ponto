@@ -1,17 +1,24 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+// Ui
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = {
+
+}
+
 export class Employees extends Component {
   state = {
   }
 
-  componentDidMount() {
-    document.title = 'Funcionários | In Ponto'
-  }
+  // componentDidMount() {
+  //   document.title = 'Funcionários | In Ponto'
+  // }
 
   render() {
     return (
-      <div />
+      <p>Funcionários</p>
     )
   }
 }
@@ -19,4 +26,4 @@ export class Employees extends Component {
 Employees.propTypes = {
 }
 
-export default Employees
+export default withStyles(styles)(Employees)

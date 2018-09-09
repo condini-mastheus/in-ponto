@@ -39,7 +39,7 @@ export const Admin = (props) => {
   return (
     <div className={classes.root}>
       <Header />
-      <Sidebar match={match} />
+      <Sidebar />
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {/* <Typography noWrap>You think water moves fast? You should see ice.</Typography> */}
