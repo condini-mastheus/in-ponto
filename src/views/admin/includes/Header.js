@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 // Ui
 import { withStyles } from '@material-ui/core/styles'
@@ -11,6 +12,9 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import Icon from '@material-ui/core/Icon'
+
+// State management
+import ActionsCreators from '../../../store/actionCreators'
 
 const styles = theme => ({
   flex: {
@@ -32,7 +36,22 @@ export class Header extends Component {
   }
 
   componentDidMount() {
-    document.title = 'Painel de Controle | In ponto'
+    const { location, loadPageInfo } = this.props
+
+    console.log(this.props)
+
+    loadPageInfo(location.pathname)
+  }
+
+  componentDidUpdate(prevProps) {
+    const { page } = this.props
+
+    if (page.data.name !== prevProps.page.data.name) {
+      document.title = `${page.data.name} | In Ponto`
+      return true
+    }
+
+    return false
   }
 
   handleChange = (event) => {
@@ -48,7 +67,7 @@ export class Header extends Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, page } = this.props
     const { auth, anchorEl } = this.state
     const open = Boolean(anchorEl)
 
@@ -61,7 +80,7 @@ export class Header extends Component {
           </IconButton>
 
           <Typography variant="title" color="inherit" className={classes.flex}>
-            Dashboard
+            { page.data.name }
           </Typography>
 
           {auth && (
@@ -101,6 +120,19 @@ export class Header extends Component {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
+  page: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  loadPageInfo: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(withRouter(Header))
+
+const mapStateToProps = state => ({
+  page: state.page,
+})
+
+const mapDispatchToProps = dispatch => ({
+  loadPageInfo: url => dispatch(ActionsCreators.pageInfoRequest(url)),
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withRouter(Header)))

@@ -29,10 +29,6 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
 })
 
-// const handleClick = url => () => {
-//   props.loadPageInfo(url)
-// }
-
 export const Sidebar = (props) => {
   const { classes } = props
 
@@ -52,8 +48,8 @@ export const Sidebar = (props) => {
               <ListItem
                 button
                 key={item.key}
-                // component={Link}
-                // to={`${item.to}`}
+                component={Link}
+                to={`${item.to}`}
                 onClick={() => props.loadPageInfo(key)}
                 // onClick={handleClick(key)}
               >
@@ -83,6 +79,7 @@ export const Sidebar = (props) => {
 
 Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
+  loadPageInfo: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({})

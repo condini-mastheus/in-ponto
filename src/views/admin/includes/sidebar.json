@@ -3,7 +3,7 @@
     "/admin" : {
       "key": 1,
       "icon": "inbox",
-      "name": "Dashboard",
+      "name": "Painel",
       "to": "/admin"
     },
     "/admin/drafts": {

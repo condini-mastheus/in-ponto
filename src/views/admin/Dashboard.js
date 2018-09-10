@@ -1,18 +1,29 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export default class Dashboard extends Component {
-  state = {
+// Ui
+import { withStyles } from '@material-ui/core/styles'
 
+const styles = {
+
+}
+
+export class Dashboard extends Component {
+  state = {
   }
 
   // componentDidMount() {
-  //   document.title = 'Dashboard | In Ponto'
+  //   document.title = 'Funcionários | In Ponto'
   // }
 
   render() {
     return (
-      <p>Painel de Controle</p>
+      <p>Funcionários</p>
     )
   }
 }
+
+Dashboard.propTypes = {
+}
+
+export default withStyles(styles)(Dashboard)
