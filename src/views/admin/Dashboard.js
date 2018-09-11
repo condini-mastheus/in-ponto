@@ -18,7 +18,7 @@ export class Dashboard extends Component {
 
   render() {
     return (
-      <p>Funcionários</p>
+      <p>Dash</p>
     )
   }
 }

@@ -45,6 +45,7 @@ export const Admin = (props) => {
         {/* <Typography noWrap>You think water moves fast? You should see ice.</Typography> */}
         <Route path={`${match.path}/`} exact component={Dashboard} />
         <Route path={`${match.path}/employees`} exact component={Employees} />
+        {/* <Route path={`${match.path}/employees/new`} exact component={NewEmployee} /> */}
       </main>
       <Footer />
     </div>
