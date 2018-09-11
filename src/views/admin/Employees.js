@@ -15,17 +15,8 @@ import IconButton from '@material-ui/core/IconButton'
 // custom
 import CustomTable from './includes/CustomTable'
 
-function getModalStyle() {
-  const top = 50
-  const left = 50
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  }
-}
-
+// Services
+import validation from '../../services/validation'
 
 const styles = theme => ({
   root: {
@@ -43,7 +34,8 @@ const styles = theme => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '60%',
+    maxWidth: 600,
+    width: '100%',
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
@@ -63,6 +55,7 @@ export class Employees extends Component {
   state = {
     openModal: false,
     name: '',
+    error: {},
   }
 
   handleOpen = () => {
@@ -81,15 +74,30 @@ export class Employees extends Component {
 
   handleSubmit = () => (event) => {
     event.preventDefault()
-  }
+    const { name } = this.state
 
-  // componentDidMount() {
-  //   document.title = 'Funcionários | In Ponto'
-  // }
+    const error = {}
+    error.name = !!validation({ name })
+
+    if (error.name) {
+      this.setState({ error })
+      return false
+    }
+
+    this.setState({ error })
+
+    const newEmployee = {
+      name,
+    }
+
+    console.log(newEmployee)
+
+    return true
+  }
 
   render() {
     const { classes } = this.props
-    const { openModal, name } = this.state
+    const { openModal, name, error } = this.state
     return (
       <div className={classes.root}>
         <CustomTable />
@@ -99,8 +107,6 @@ export class Employees extends Component {
           aria-label="Add"
           className={classes.button}
           onClick={this.handleOpen}
-          // component={Link}
-          // to="/admin/employees/new"
         >
           <Icon>add</Icon>
         </Button>
@@ -110,7 +116,7 @@ export class Employees extends Component {
           open={openModal}
           onClose={this.handleClose}
         >
-          <div style={getModalStyle()} className={classes.paper}>
+          <div className={classes.paper}>
             <Tooltip title="Fechar">
               <IconButton
                 aria-label="Fechar"
@@ -133,7 +139,7 @@ export class Employees extends Component {
                     label="Digite o nome"
                     className={classes.textField}
                     value={name}
-                    // error={error.userCode}
+                    error={error.name}
                     onChange={this.handleChange('name')}
                     fullWidth
                     margin="normal"

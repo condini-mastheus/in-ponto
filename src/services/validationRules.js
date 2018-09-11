@@ -20,6 +20,11 @@ const validationRules = {
       allowEmpty: false,
     },
   },
+  name: {
+    presence: {
+      allowEmpty: false,
+    },
+  },
 
 }
 
