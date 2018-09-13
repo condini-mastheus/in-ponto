@@ -56,7 +56,7 @@ const CustomTableToolbar = (props) => {
       <div className={classes.title}>
         {numSelected > 0 ? (
           <Typography color="inherit" variant="subheading">
-            {numSelected} selected
+            {numSelected} {numSelected === 1 ? 'selecionado' : 'selecionados'}
           </Typography>
         ) : (
           <Typography variant="title" id="tableTitle">
