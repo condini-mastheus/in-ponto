@@ -8,6 +8,10 @@ export const { Types, Creators } = createActions({
   pageInfoRequest: ['url'],
   pageInfoSuccess: ['info'],
   pageInfoFailure: null,
+
+  getEmployeesRequest: null,
+  getEmployeesSuccess: ['employees'],
+  getEmployeesFailure: ['errorMessage'],
 })
 
 export default Creators

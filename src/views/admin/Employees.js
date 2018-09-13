@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 // Ui
 import { withStyles } from '@material-ui/core/styles'
@@ -17,6 +18,9 @@ import CustomTable from './includes/CustomTable'
 
 // Services
 import validation from '../../services/validation'
+
+// State management
+import ActionsCreators from '../../store/actionCreators'
 
 const styles = theme => ({
   root: {
@@ -56,6 +60,12 @@ export class Employees extends Component {
     openModal: false,
     name: '',
     error: {},
+  }
+
+  componentDidMount() {
+    const { loadEmployees, employees } = this.props
+    
+    loadEmployees()
   }
 
   handleOpen = () => {
@@ -169,6 +179,16 @@ export class Employees extends Component {
 
 Employees.propTypes = {
   classes: PropTypes.object.isRequired,
+  loadEmployees: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(Employees)
+const mapStateToProps = state => ({
+  employees: state.employees,
+})
+
+const mapDispatchToProps = dispatch => ({
+  loadEmployees: () => dispatch(ActionsCreators.getEmployeesRequest()),
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Employees))
