@@ -1,4 +1,4 @@
-import { put } from 'redux-saga/effects'
+import { put, call } from 'redux-saga/effects'
 // import { eventChannel } from 'redux-saga'
 
 import ActionCreators from '../actionCreators'
@@ -16,18 +16,30 @@ import { database } from '../../services/firebase'
 //   return listener
 // }
 
-export default function* getEmployees() {
-  // let employees = {}
-  yield database.ref('users').on('value', (snapshot) => {
-    console.log(snapshot.val())
+function connect() {
+  return new Promise((resolve) => {
+    database.ref('users').on('value', resolve)
   })
+}
 
 
-  // if ((employees).length > 0) {
-  //   yield put(ActionCreators.getEmployeesSuccess(employees))
-  // } else {
-  //   yield put(ActionCreators.getEmployeesFailure())
-  // }
+// if (snapshot.val() === true)
+//   yield put(actions.connected());
+
+export default function* getEmployees() {
+  const employeesPromisse = yield call(connect)
+
+  // yield database.ref('users').on('value', (snapshot) => {
+  //   employees = snapshot.val()
+  // })
+
+  const employees = [employeesPromisse.val()]
+
+  if (employees) {
+    yield put(ActionCreators.getEmployeesSuccess(employees))
+  } else {
+    yield put(ActionCreators.getEmployeesFailure())
+  }
 }
 
 
