@@ -64,8 +64,12 @@ export class Employees extends Component {
 
   componentDidMount() {
     const { loadEmployees, employees } = this.props
-    
     loadEmployees()
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log(prevProps.employees)
+    console.log(this.props.employees)
   }
 
   handleOpen = () => {

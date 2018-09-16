@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
+import 'firebase/auth'
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -10,5 +11,6 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
 }
 
-export const firebaseInit = firebase.initializeApp(config)
+firebase.initializeApp(config)
 export const database = firebase.database()
+export const auth = firebase.auth()

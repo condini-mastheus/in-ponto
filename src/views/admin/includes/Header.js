@@ -66,6 +66,11 @@ export class Header extends Component {
     this.setState({ anchorEl: null })
   }
 
+  handleLogout = () => {
+    const { logout } = this.props
+    logout()
+  }
+
   render() {
     const { classes, page } = this.props
     const { auth, anchorEl } = this.state
@@ -109,6 +114,7 @@ export class Header extends Component {
             >
               <MenuItem onClick={this.handleClose}>Profile</MenuItem>
               <MenuItem onClick={this.handleClose}>My account</MenuItem>
+              <MenuItem onClick={this.handleLogout}>Sair</MenuItem>
             </Menu>
           </div>
           )}
@@ -123,6 +129,7 @@ Header.propTypes = {
   page: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   loadPageInfo: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 }
 
 
@@ -132,6 +139,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadPageInfo: url => dispatch(ActionsCreators.pageInfoRequest(url)),
+  logout: () => dispatch(ActionsCreators.logoutRequest()),
 })
 
 

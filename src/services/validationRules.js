@@ -25,7 +25,20 @@ const validationRules = {
       allowEmpty: false,
     },
   },
-
+  user: {
+    email: true,
+    presence: {
+      allowEmpty: false,
+    },
+  },
+  password: {
+    presence: {
+      allowEmpty: false,
+    },
+    length: {
+      minimum: 6,
+    },
+  },
 }
 
 export default validationRules

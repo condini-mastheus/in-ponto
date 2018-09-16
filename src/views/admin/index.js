@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 // Ui
 import { withStyles } from '@material-ui/core/styles'
@@ -34,7 +35,19 @@ const styles = theme => ({
 })
 
 export const Admin = (props) => {
-  const { match, classes } = props
+  const { match, classes, auth } = props
+
+  if (auth.isAuthing) {
+    return (
+      <div className={classes.root}>
+        <p>Carregando...</p>
+      </div>
+    )
+  }
+
+  if (!auth.isAuth) {
+    return <Redirect to="/login" />
+  }
 
   return (
     <div className={classes.root}>
@@ -55,6 +68,15 @@ export const Admin = (props) => {
 Admin.propTypes = {
   match: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Admin)
+const mapStateToProps = state => ({
+  auth: state.auth,
+})
+
+const mapDispatchToProps = dispatch => ({
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Admin))
