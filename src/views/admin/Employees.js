@@ -67,10 +67,10 @@ export class Employees extends Component {
     loadEmployees()
   }
 
-  componentDidUpdate(prevProps) {
-    console.log(prevProps.employees)
-    console.log(this.props.employees)
-  }
+  // componentDidUpdate(prevProps) {
+  //   console.log(prevProps.employees)
+  //   console.log(this.props.employees)
+  // }
 
   handleOpen = () => {
     this.setState({ openModal: true })

@@ -39,6 +39,6 @@ export function* checkAuth() {
 }
 
 export function* logoutUser() {
-  yield auth.signOut()
+  yield call([auth, auth.signOut])
   yield put(ActionCreators.logoutSuccess())
 }
