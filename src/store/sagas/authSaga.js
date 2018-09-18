@@ -7,12 +7,20 @@ export const authUser = ({ api }) => function* (action) {
     const { email, password } = action
     const data = yield call(api.onAuthWithCredentials, email, password)
 
-    const { uid } = data.user
+    const {
+      uid, displayName, emailVerified, photoURL, isAnonymous, providerData,
+    } = data.user
 
     let user = yield call(api.getUser, uid)
+
     user = {
       ...user,
       uid,
+      displayName,
+      emailVerified,
+      photoURL,
+      isAnonymous,
+      providerData,
     }
 
     yield put(ActionCreators.authSuccess(user))
