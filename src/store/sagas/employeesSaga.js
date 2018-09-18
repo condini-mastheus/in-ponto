@@ -1,15 +1,11 @@
 import { put, call } from 'redux-saga/effects'
 
 import ActionCreators from '../actionCreators'
-import { database } from '../../services/firebase'
 
-const connect = () => new Promise(resolve => database.ref('users').on('value', resolve))
-
-export default function* getEmployees() {
+export const getEmployees = ({ api }) => function* () {
   try {
-    const employeesPromisse = yield call(connect)
-    const employees = employeesPromisse.val()
-
+    const employees = yield call(api.getEmployees, 'k312sa0231')
+    
     if (employees) {
       yield put(ActionCreators.getEmployeesSuccess(employees))
     } else {

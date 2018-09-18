@@ -20,6 +20,7 @@
     "react/jsx-one-expression-per-line": "off",
     "no-return-assign": "off",
     "react/forbid-prop-types": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "func-names": "off"
   }
 }
