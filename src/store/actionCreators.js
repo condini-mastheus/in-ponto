@@ -16,7 +16,7 @@ export const { Types, Creators } = createActions({
   pageInfoSuccess: ['info'],
   pageInfoFailure: null,
 
-  getEmployeesRequest: null,
+  getEmployeesRequest: ['company'],
   getEmployeesSuccess: ['employees'],
   getEmployeesFailure: ['errorMessage'],
 })
