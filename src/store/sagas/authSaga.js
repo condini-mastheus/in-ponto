@@ -31,12 +31,29 @@ export const authUser = ({ api }) => function* (action) {
 
 export const checkAuth = ({ api }) => function* () {
   try {
-    const user = yield call(api.onAuthStateChanged)
+    const data = yield call(api.onAuthStateChanged)
+
+    const {
+      uid, displayName, emailVerified, photoURL, isAnonymous, providerData,
+    } = data
+
+    let user = yield call(api.getUser, uid)
+
+    user = {
+      ...user,
+      uid,
+      displayName,
+      emailVerified,
+      photoURL,
+      isAnonymous,
+      providerData,
+    }
+
     yield put(ActionCreators.checkAuthSuccess(user))
     // if (user) {
     // }
   } catch (error) {
-    yield put(ActionCreators.checkAuthFailure())
+    yield put(ActionCreators.checkAuthFailure(error))
   }
 }
 
