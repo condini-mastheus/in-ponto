@@ -19,6 +19,10 @@ export const { Types, Creators } = createActions({
   getEmployeesRequest: ['company'],
   getEmployeesSuccess: ['employees'],
   getEmployeesFailure: ['errorMessage'],
+
+  createEmployeesRequest: ['newEmployee'],
+  createEmployeesSuccess: ['employee'],
+  createEmployeesFailure: ['errorMessage'],
 })
 
 export default Creators
