@@ -4,6 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
+// routes
+const routers = require('./routers');
+
 const app = express();
 
 admin.initializeApp(functions.config().firebase);
@@ -13,12 +16,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helmet());
 
 app.get('/', (req, res) => {
-  // admin.database().ref('users').on('value', snapshot => {
-  //   const users = snapshot.val()
-  //   res.send(users);
-  // })
-
   res.send('<code>Version: 1.0.0')
 });
+
+routers(app)
 
 exports.api = functions.https.onRequest(app);
