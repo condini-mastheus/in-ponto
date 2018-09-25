@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 // Ui
 import { withStyles } from '@material-ui/core/styles'
@@ -18,6 +19,7 @@ import CustomTable from './includes/CustomTable'
 
 // Services
 import validation from '../../services/validation'
+import dateFormat from '../../services/dateFormat'
 
 // State management
 import ActionsCreators from '../../store/actionCreators'
@@ -63,7 +65,7 @@ export class Employees extends Component {
   }
 
   componentDidMount() {
-    const { loadEmployees, employees } = this.props
+    const { loadEmployees } = this.props
     loadEmployees()
   }
 
@@ -89,6 +91,7 @@ export class Employees extends Component {
   handleSubmit = () => (event) => {
     event.preventDefault()
     const { name } = this.state
+    const { createEmployee } = this.props
 
     const error = {}
     error.name = !!validation({ name })
@@ -100,18 +103,28 @@ export class Employees extends Component {
 
     this.setState({ error })
 
+    const code = Math.floor(10000 + Math.random() * 90000)
+    const createdAt = dateFormat({ date: 'now', format: 'YYYY-DD-MM HH:mm:ss' })
+
     const newEmployee = {
       name,
+      code,
+      createdAt,
     }
 
-    console.log(newEmployee)
+    createEmployee(newEmployee)
 
     return true
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, employees: { saved, isSaving, data } } = this.props
     const { openModal, name, error } = this.state
+
+    if (saved) {
+      return <Redirect to={`/admin/employees/${data.id}`} />
+    }
+    
     return (
       <div className={classes.root}>
         <CustomTable />
@@ -184,6 +197,8 @@ export class Employees extends Component {
 Employees.propTypes = {
   classes: PropTypes.object.isRequired,
   loadEmployees: PropTypes.func.isRequired,
+  createEmployee: PropTypes.func.isRequired,
+  employees: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -192,6 +207,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadEmployees: () => dispatch(ActionsCreators.getEmployeesRequest()),
+  createEmployee: employee => dispatch(ActionsCreators.createEmployeesRequest(employee)),
 })
 
 

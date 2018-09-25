@@ -22,6 +22,14 @@ const Api = () => {
     })
   })
 
+  const onSet = (endpoint, newData) => new Promise((resolve, reject) => {
+    const data = database.ref(endpoint).push(newData).catch((error) => {
+      reject(new Error(error))
+    })
+
+    resolve(data)
+  })
+
   const authWithEmailAndPassword = (email, password) => new Promise((resolve, reject) => {
     const data = auth.signInWithEmailAndPassword(email, password).catch((error) => {
       reject(new Error(error))
@@ -48,6 +56,7 @@ const Api = () => {
     // createUser: data => create('/users/', data),
 
     getEmployees: companyId => onRead(`/employees/${companyId}`),
+    createEmployees: (companyId, employee) => onSet(`/employees/${companyId}`, employee),
     // removeRun: id => del(`/runs/${id}`),
     // createRun: data => create('/runs/', data),
     // updateRun: data => update(`/runs/${data.id}`, data),
