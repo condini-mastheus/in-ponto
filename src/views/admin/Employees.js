@@ -65,8 +65,8 @@ export class Employees extends Component {
   }
 
   componentDidMount() {
-    const { loadEmployees } = this.props
-    loadEmployees()
+    const { loadEmployees, auth } = this.props
+    loadEmployees(auth.user.company)
   }
 
   // componentDidUpdate(prevProps) {
@@ -199,14 +199,16 @@ Employees.propTypes = {
   loadEmployees: PropTypes.func.isRequired,
   createEmployee: PropTypes.func.isRequired,
   employees: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
   employees: state.employees,
+  auth: state.auth,
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadEmployees: () => dispatch(ActionsCreators.getEmployeesRequest()),
+  loadEmployees: company => dispatch(ActionsCreators.getEmployeesRequest(company)),
   createEmployee: employee => dispatch(ActionsCreators.createEmployeesRequest(employee)),
 })
 
