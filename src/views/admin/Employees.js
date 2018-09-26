@@ -57,6 +57,18 @@ const styles = theme => ({
   },
 })
 
+const headerCells = [
+  {
+    id: 'name', numeric: false, disablePadding: true, label: 'Nome',
+  },
+  {
+    id: 'employeeCode', numeric: false, disablePadding: false, label: 'Cod. Funcionário',
+  },
+  {
+    id: 'createdAt', numeric: false, disablePadding: false, label: 'Criado em',
+  },
+]
+
 export class Employees extends Component {
   state = {
     openModal: false,
@@ -118,16 +130,36 @@ export class Employees extends Component {
   }
 
   render() {
-    const { classes, employees: { saved, isSaving, data } } = this.props
+    const {
+      classes, employees: {
+        saved, isSaving, data, isLoading,
+      },
+    } = this.props
     const { openModal, name, error } = this.state
+    let employes = []
+
+    if (!isLoading) {
+      const keys = Object.keys(data)
+      employes = keys.map(key => ({
+        id: key,
+        name: data[key].name,
+        code: data[key].code,
+        createdAt: dateFormat({ date: data[key].createdAt, currentFormat: 'YYYY-DD-MM HH:mm:ss', format: 'DD/MM/YYYY HH:mm' }),
+      }))
+    }
 
     if (saved) {
       return <Redirect to={`/admin/employees/${data.id}`} />
     }
-    
+
     return (
       <div className={classes.root}>
-        <CustomTable />
+        {isLoading
+          && <p>wait!</p>
+        }
+        {!isLoading
+          && <CustomTable headerCells={headerCells} data={employes} />
+        }
         <Button
           variant="fab"
           color="secondary"

@@ -9,24 +9,6 @@ import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import Tooltip from '@material-ui/core/Tooltip'
 
-const rows = [
-  {
-    id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)',
-  },
-  {
-    id: 'calories', numeric: true, disablePadding: false, label: 'Calories',
-  },
-  {
-    id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)',
-  },
-  {
-    id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)',
-  },
-  {
-    id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)',
-  },
-]
-
 export class CustomTableHead extends Component {
     createSortHandler = property => (event) => {
       const { onRequestSort } = this.props
@@ -36,6 +18,7 @@ export class CustomTableHead extends Component {
     render() {
       const {
         onSelectAllClick, order, orderBy, numSelected, rowCount,
+        headerCells,
       } = this.props
 
       return (
@@ -48,7 +31,7 @@ export class CustomTableHead extends Component {
                 onChange={onSelectAllClick}
               />
             </TableCell>
-            {rows.map(row => (
+            {headerCells.map(row => (
               <TableCell
                 key={row.id}
                 numeric={row.numeric}
@@ -83,6 +66,7 @@ CustomTableHead.propTypes = {
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
+  headerCells: PropTypes.array.isRequired,
 }
 
 export default CustomTableHead

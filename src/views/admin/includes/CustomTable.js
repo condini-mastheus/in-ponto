@@ -60,31 +60,22 @@ const styles = theme => ({
   },
   clickable: {
     cursor: 'pointer',
-  }
+  },
 })
 
 class CustomTable extends Component {
     state = {
-      order: 'asc',
-      orderBy: 'calories',
+      order: 'desc',
+      orderBy: 'name',
       selected: [],
-      data: [
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Donut', 452, 25.0, 51, 4.9),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-        createData('Honeycomb', 408, 3.2, 87, 6.5),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Jelly Bean', 375, 0.0, 94, 0.0),
-        createData('KitKat', 518, 26.0, 65, 7.0),
-        createData('Lollipop', 392, 0.2, 98, 0.0),
-        createData('Marshmallow', 318, 0, 81, 2.0),
-        createData('Nougat', 360, 19.0, 9, 37.0),
-        createData('Oreo', 437, 18.0, 63, 4.0),
-      ],
+      data: [],
       page: 0,
       rowsPerPage: 10,
+    }
+
+    componentDidMount() {
+      const { data } = this.props
+      this.setState({ data })
     }
 
     handleRequestSort = (event, property) => {
@@ -108,7 +99,7 @@ class CustomTable extends Component {
 
     handleCheckboxClick = (event, id) => {
       event.stopPropagation()
-      
+
       const { selected } = this.state
       const selectedIndex = selected.indexOf(id)
       let newSelected = []
@@ -144,7 +135,7 @@ class CustomTable extends Component {
     isSelected = id => this.state.selected.indexOf(id) !== -1
 
     render() {
-      const { classes } = this.props
+      const { classes, headerCells } = this.props
       const {
         data, order, orderBy, selected, rowsPerPage, page,
       } = this.state
@@ -162,37 +153,41 @@ class CustomTable extends Component {
                 onSelectAllClick={this.handleSelectAllClick}
                 onRequestSort={this.handleRequestSort}
                 rowCount={data.length}
+                headerCells={headerCells}
               />
               <TableBody>
                 {stableSort(data, getSorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((n) => {
-                    const isSelected = this.isSelected(n.id)
-                    
+                  .map((row) => {
+                    const isSelected = this.isSelected(row.id)
                     return (
                       <TableRow
                         hover
-                        onClick={event => this.handleRowClick(event, n.id)}
+                        onClick={event => this.handleRowClick(event, row.id)}
                         role="checkbox"
                         aria-checked={isSelected}
                         tabIndex={-1}
-                        key={n.id}
+                        key={row.id}
                         className={classes.clickable}
                         selected={isSelected}
                       >
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            checked={isSelected}
-                            onClick={event => this.handleCheckboxClick(event, n.id)}
-                          />
-                        </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
-                          {n.name}
-                        </TableCell>
-                        <TableCell numeric>{n.calories}</TableCell>
-                        <TableCell numeric>{n.fat}</TableCell>
-                        <TableCell numeric>{n.carbs}</TableCell>
-                        <TableCell numeric>{n.protein}</TableCell>
+                        {
+                          Object.keys(row).map((key) => {
+                            if (key === 'id') {
+                              return (
+                                <TableCell padding="checkbox" key={key}>
+                                  <Checkbox
+                                    checked={isSelected}
+                                    onClick={event => this.handleCheckboxClick(event, row.id)}
+                                  />
+                                </TableCell>
+                              )
+                            }
+
+                            return <TableCell component="th" scope="row" padding="none" key={key}>{row[key]}</TableCell>
+                          })
+                        }
+                        
                       </TableRow>
                     )
                   })}
@@ -225,6 +220,8 @@ class CustomTable extends Component {
 
 CustomTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  headerCells: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
 }
 
 export default withStyles(styles)(CustomTable)
