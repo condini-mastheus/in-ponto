@@ -13,6 +13,7 @@ import Footer from './includes/Footer'
 
 import Dashboard from './Dashboard'
 import Employees from './Employees'
+import EditEmployee from './EditEmployee'
 
 const styles = theme => ({
   root: {
@@ -58,7 +59,7 @@ export const Admin = (props) => {
         {/* <Typography noWrap>You think water moves fast? You should see ice.</Typography> */}
         <Route path={`${match.path}/`} exact component={Dashboard} />
         <Route path={`${match.path}/employees`} exact component={Employees} />
-        {/* <Route path={`${match.path}/employees/new`} exact component={NewEmployee} /> */}
+        <Route path={`${match.path}/employees/:employeeId`} exact component={EditEmployee} />
       </main>
       <Footer />
     </div>

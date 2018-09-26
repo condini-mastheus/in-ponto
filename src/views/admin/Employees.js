@@ -138,7 +138,12 @@ export class Employees extends Component {
     const { openModal, name, error } = this.state
     let employes = []
 
-    if (!isLoading) {
+
+    if (saved) {
+      return <Redirect to={`/admin/employees/${data.id}`} />
+    }
+
+    if (!isLoading && !isSaving) {
       const keys = Object.keys(data)
       employes = keys.map(key => ({
         id: key,
@@ -146,10 +151,6 @@ export class Employees extends Component {
         code: data[key].code,
         createdAt: dateFormat({ date: data[key].createdAt, currentFormat: 'YYYY-DD-MM HH:mm:ss', format: 'DD/MM/YYYY HH:mm' }),
       }))
-    }
-
-    if (saved) {
-      return <Redirect to={`/admin/employees/${data.id}`} />
     }
 
     return (
